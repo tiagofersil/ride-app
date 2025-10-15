@@ -1,3 +1,4 @@
+@"
 name: EAS Build
 
 on:
@@ -82,3 +83,4 @@ jobs:
                 Build triggered by: @${context.actor}`
               });
             }
+"@ | Out-File -FilePath ".github\workflows\eas-build.yml" -Encoding UTF8
