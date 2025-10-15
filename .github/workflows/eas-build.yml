@@ -1,4 +1,4 @@
-Add-Content -Path ".github\workflows\eas-build.yml" -Value "name: EAS Build
+
 
 on:
   push:
