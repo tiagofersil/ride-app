@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: 18.x
           cache: npm
+          cache-dependency-path: client/package-lock.json
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
@@ -44,43 +45,4 @@ jobs:
         run: |
           cd client
           eas build --platform android --profile preview --non-interactive
-
-      - name: Comment PR with build link
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-            
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && comment.body.includes('APK Build')
-            );
-            
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: `🚀 **APK Build Completed!**
-                
-                Download your APK: [Click here to download](https://expo.dev/accounts/ts201328/projects/ride-app/builds)
-                
-                Build triggered by: @${context.actor}`
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: `🚀 **APK Build Completed!**
-                
-                Download your APK: [Click here to download](https://expo.dev/accounts/ts201328/projects/ride-app/builds)
-                
-                Build triggered by: @${context.actor}`
-              });
-            }
 "@ | Out-File -FilePath ".github\workflows\eas-build.yml" -Encoding UTF8
