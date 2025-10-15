@@ -1,5 +1,4 @@
-@"
-name: EAS Build
+Add-Content -Path ".github\workflows\eas-build.yml" -Value "name: EAS Build
 
 on:
   push:
@@ -46,4 +45,4 @@ jobs:
           cd client
           eas build --platform android --profile preview --non-interactive
 
-"@ | Out-File -FilePath ".github\workflows\eas-build.yml" -Encoding UTF8
+
