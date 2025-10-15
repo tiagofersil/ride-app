@@ -1,0 +1,78 @@
+How to Use the RideApp Project  
+
+Thank you for claiming this project! Follow the steps below to set up the project.  
+
+Client Setup:  
+
+1. Navigate to the `client` folder.  
+2. Open the Universal Search in VS Code and replace all instances of `YOUR_GOOGLE_MAP_API_KEY` with your actual API key.  
+3. Next, go to the `app.json` file and change the `bundleIdentifier` from `com.ritik.rideapp` to your preferred identifier.  
+4. Run the following command to install dependencies:  
+   
+   npm install --force
+   
+5. Install Expo EAS CLI and log in to your Expo account:  
+   
+   npm install -g eas-cli
+   eas login
+   
+6. Run the following command to prebuild the project:  
+   
+   npx expo prebuild
+   
+7. If using a real device, update the API URLs in the client configuration:  
+   - Open `src/service/config.js` and modify the `BASE_URL` and `SOCKET_URL` to use your local network IP or hosted URL.  
+
+   Example:  
+
+   import { Platform } from "react-native";
+
+   export const BASE_URL = Platform.OS === 'ios' ?
+       'http://localhost:3000' :
+       'http://10.0.2.2:3000';
+
+   export const SOCKET_URL = Platform.OS === 'ios' ?
+       'ws://localhost:3000' :
+       'ws://10.0.2.2:3000';
+
+   // USE YOUR NETWORK IP OR HOSTED URL
+   // export const BASE_URL = 'http://192.168.xx.xxx:3000';
+   // export const SOCKET_URL = 'ws://192.168.xx.xxx:3000';
+   
+8. Finally, run the app for iOS or Android:  
+   - For iOS:  
+     
+     npm run ios
+     
+   - For Android:  
+     
+     npm run android
+     
+
+
+
+Server Setup:  
+
+1. Navigate to the `server` folder.  
+2. Rename the `env_template` file to `.env`.  
+3. Open the `.env` file and update your credentials, such as the Mongo URI and other configurations.  
+4. The server is configured to run on all IP addresses (`0.0.0.0`), which allows access from other devices on the same WiFi network. This is handled in `app.js`:  
+
+   
+   server.listen(process.env.PORT || 3000, "0.0.0.0", () => {
+       console.log(`Server running on port ${process.env.PORT || 3000}`);
+   });
+   
+5. Install the server dependencies:  
+   
+   npm install --force
+   
+6. Start the server by running:  
+   
+   npm start
+   
+
+
+
+You're all set! Enjoy developing and testing your app. If you run into any issues, feel free to reach out. 🚀  
+
